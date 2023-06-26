@@ -1,0 +1,151 @@
+{
+	"info": {
+		"_postman_id": "20084e38-a391-43e8-978f-b32ad99ce4bf",
+		"name": "shopping-cart",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13811851"
+	},
+	"item": [
+		{
+			"name": "product-list",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Total product should be 30\", function () {\r",
+							"    var products = pm.response.json();\r",
+							"    pm.expect(30).to.eql(products.total);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/product",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "product-detail",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Product name should be 43 Piece dinner Set\", function () {\r",
+							"    var name = pm.response.json();\r",
+							"    pm.expect(\"43 Piece dinner Set\").to.eql(name.product_name);\r",
+							"});\r",
+							"pm.test(\"Product price should be 12.95\", function () {\r",
+							"    var price = pm.response.json();\r",
+							"    pm.expect(12.95).to.eql(price.product_price);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{url}}/api/v1/product/2",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"product",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "submit-order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Get order_id\", function () {\r",
+							"    var jsonData = pm.response.json();\r",
+							"    pm.environment.set(\"OrderID\", jsonData.order_id);\r",
+							"});\r",
+							"pm.test(\"Total should be correct\", function () {\r",
+							"    var price = pm.response.json();\r",
+							"    pm.expect(data[\"expect_total_price\"]).to.eql(price.total_price);\r",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"cart\":[\r\n\t\t{\r\n\t\t\t\"product_id\": {{product_id}},\r\n\t\t\t\"quantity\": 1\r\n\t\t}\r\n\t],\r\n\t\"shipping_method\": \"Kerry\",\r\n\t\"shipping_address\": \"405/37 ถ.มหิดล\",\r\n\t\"shipping_sub_district\": \"ท่าศาลา\",\r\n\t\"shipping_district\": \"เมือง\",\r\n\t\"shipping_province\": \"เชียงใหม่\",\r\n\t\"shipping_zip_code\": \"50000\",\r\n\t\"recipient_name\": \"ณัฐญา ชุติบุตร\",\r\n\t\"recipient_phone_number\": \"0970809292\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}/api/v1/order",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"order"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"value": ""
+		},
+		{
+			"value": ""
+		},
+		{
+			"key": "OrderID",
+			"value": ""
+		}
+	]
+}

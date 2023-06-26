@@ -1,0 +1,1 @@
+newman run collectionname.json -e environmentname.json -d datafilename.csv
